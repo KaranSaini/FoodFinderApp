@@ -27,7 +27,7 @@ export class LocationService {
   }
 
   private getLocation(position) {
-    let coordinates$: Observable<GeolocationCoordinates> = new Observable((subscriber) => {
+    let coordinates$: Observable<any> = new Observable((subscriber) => {
       subscriber.next(position.coords);
       subscriber.complete();
     });
@@ -44,6 +44,5 @@ export class LocationService {
       console.log(data);
       this.store.dispatch({type: '[Location Service] Load Location', coordinate: data} )
     })
-    this.location$.subscribe((data) => console.log(data));
   }
 }

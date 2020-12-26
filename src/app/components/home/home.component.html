@@ -4,7 +4,9 @@
         <p>Find good food around you!</p>
     </section>
     <section>
-        <h2>Categories</h2>
-        
+        <input type="search" placeholder="Search...">
+        <h2>Cuisines:</h2>
+        <p id="generatedCusines"
+            *ngFor="let cuisine of cuisines$ | async; index as i">{{i}}.{{ cuisine.cuisine.cuisine_name }}</p>
     </section>
 </article>
