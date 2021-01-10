@@ -8,7 +8,6 @@ import {
   MetaReducer,
   on
 } from '@ngrx/store';
-import { environment } from '../../environments/environment';
 
 import * as LocationActions from './location.actions';
 import { Coordinates } from '../models/Coordinates';
@@ -20,7 +19,10 @@ export interface State {
 
 // Defining iniital values (there are none)
 export const iniitialState: State = {
-  location: null
+  location: {
+    latitude: undefined,
+    longitude: undefined
+  }
 };
 
 const locationReducer = createReducer(

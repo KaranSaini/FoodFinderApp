@@ -2,11 +2,25 @@
     <section class="header">
         <h1>Food App</h1>
         <p>Find good food around you!</p>
+        <p>{{ location$ | async | json }}</p>
     </section>
     <section>
-        <input type="search" placeholder="Search...">
-        <h2>Cuisines:</h2>
+        <form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm)">
+            <input type="search" formControlName="query" placeholder="Search...">
+            <mat-slider 
+            formControlName="radius"
+            thumbLabel
+            min="0" max="100" 
+            step="1" value="15"></mat-slider>
+            <button type="submit">Submit</button>
+        </form>
+        <button 
+            class="locationButton"
+            (click)="locate($event)"
+            >Get Location</button>
+        {{searchForm.value | json}}
+        <!-- <h2>Cuisines:</h2>
         <p id="generatedCusines"
-            *ngFor="let cuisine of cuisines$ | async; index as i">{{i}}.{{ cuisine.cuisine.cuisine_name }}</p>
+            *ngFor="let cuisine of cuisines$ | async; index as i">{{i}}.{{ cuisine.cuisine.cuisine_name }}</p> -->
     </section>
 </article>

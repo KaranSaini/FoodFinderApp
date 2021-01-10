@@ -33,16 +33,16 @@ export class LocationService {
     });
     let obs1$ = coordinates$.pipe(
       pluck('latitude')
-    )
+    );
     let obs2$ = coordinates$.pipe(
       pluck('longitude')
-    )
+    );
     // Sets Latitude and Longin
     zip(obs1$, obs2$).pipe(
       map(([latitude, longitude]) => ({ latitude, longitude }))
     ).subscribe((data) => {
       console.log(data);
       this.store.dispatch({type: '[Location Service] Load Location', coordinate: data} )
-    })
+    });
   }
 }
