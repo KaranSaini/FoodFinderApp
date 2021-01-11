@@ -11,6 +11,7 @@ import { Coordinates } from 'src/app/models/Coordinates';
 import { LocationService } from 'src/app/services/location.service';
 import { ZomatoService } from '../../services/zomato.service';
 import { MatSliderChange } from '@angular/material/slider';
+import { Restaurant } from 'src/app/models/Restaurant';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,8 @@ import { MatSliderChange } from '@angular/material/slider';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  location$: Observable<any> = this.store.select('location');
+  location$: Observable<Coordinates> = this.store.select('location');
+  restaurants$: Observable<Restaurant[]> = this.store.select('restaurants');
   cuisines$: Observable<any> = this.api.getCuisines(this.location$);
 
   searchForm: FormGroup = new FormGroup({
@@ -45,7 +47,8 @@ export class HomeComponent implements OnInit {
   onSubmit(data) {
     let { query, radius } = data.value;
     console.log(`The data from the form is ${query + radius}`);
-    var search$ = this.api.search(query, radius, this.location$);
-    search$.subscribe(data=>console.log(data));
+    this.api.search(query, radius, this.location$);
+    //based on the data below, dynamically create cards of restaurants or something ....
+    this.restaurants$.subscribe(data => console.log(data));
   }
 }

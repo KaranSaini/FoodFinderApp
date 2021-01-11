@@ -2,7 +2,6 @@
     <section class="header">
         <h1>Food App</h1>
         <p>Find good food around you!</p>
-        <p>{{ location$ | async | json }}</p>
     </section>
     <section>
         <form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm)">

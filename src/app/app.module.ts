@@ -23,7 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ location: fromLocation.reducer }),
+    StoreModule.forRoot({ location: fromLocation.reducer, restaurants: fromLocation.reducer }),
     EffectsModule.forRoot([]),
     BrowserAnimationsModule,
     MatSliderModule
