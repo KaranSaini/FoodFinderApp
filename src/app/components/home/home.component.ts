@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 import { Store } from '@ngrx/store';
@@ -20,12 +20,12 @@ import { Restaurant } from 'src/app/models/Restaurant';
 })
 export class HomeComponent implements OnInit {
   location$: Observable<Coordinates> = this.store.select('location');
-  restaurants$: Observable<Restaurant[]> = this.store.select('restaurants');
-  cuisines$: Observable<any> = this.api.getCuisines(this.location$);
+  // restaurants$: Observable<any> = this.store.select('restaurants');
 
   searchForm: FormGroup = new FormGroup({
     query: new FormControl(''),
-    radius: new FormControl('')
+    radius: new FormControl(''),
+    location: new FormControl(false, Validators.requiredTrue)
   });
 
   constructor(private store: Store<{ location: Coordinates }>,
@@ -34,21 +34,30 @@ export class HomeComponent implements OnInit {
     private actions$: Actions) { 
     }
     
-    ngOnInit() {
+  ngOnInit() {
       // Looks for Location Success
     this.actions$.pipe(
       ofType('[Location Service] Load Location')
-    ).subscribe(()=>console.log('the location was successfully set'));
+    ).subscribe(()=> {
+      console.log('the location was successfully set')
+    });
   }
 
   locate(e) {
     this.location.callGeoLocationAPI();
+    this.searchForm.patchValue({'location': true});
   }
   onSubmit(data) {
+    // checking if location is set beefore looking for restaurants
+    let formVal = this.searchForm.value;
+    if(formVal.location == false) {
+      alert('LOCATION IS REQUIRED TO PROCEED');
+      return;
+    }
+
     let { query, radius } = data.value;
     console.log(`The data from the form is ${query + radius}`);
-    this.api.search(query, radius, this.location$);
-    //based on the data below, dynamically create cards of restaurants or something ....
-    this.restaurants$.subscribe(data => console.log(data));
+    let restaurants$: Observable<Restaurant[]> = this.api.search(query, radius, this.location$);
+    restaurants$.subscribe(d => console.log(d));
   }
 }

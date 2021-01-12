@@ -11,15 +11,16 @@
             thumbLabel
             min="0" max="100" 
             step="1" value="15"></mat-slider>
+            
             <button type="submit">Submit</button>
+
+            <button 
+                type="button"
+                formControlName="location"
+                class="locationButton"
+                (click)="locate($event)"
+                >Get Location</button>
         </form>
-        <button 
-            class="locationButton"
-            (click)="locate($event)"
-            >Get Location</button>
         {{searchForm.value | json}}
-        <!-- <h2>Cuisines:</h2>
-        <p id="generatedCusines"
-            *ngFor="let cuisine of cuisines$ | async; index as i">{{i}}.{{ cuisine.cuisine.cuisine_name }}</p> -->
     </section>
 </article>

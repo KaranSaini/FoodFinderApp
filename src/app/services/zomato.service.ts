@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { pluck, map } from 'rxjs/operators';
 import { Coordinates } from '../models/Coordinates';
+import { Restaurant } from '../models/Restaurant';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,6 @@ export class ZomatoService {
 
   getCuisines(coords$: Observable<Coordinates>) {
     const pluckedCoords = this.pluckCoordinates(coords$);
-    // let lat: Subscription = coords$.pipe(pluck('latitude')).subscribe(data => (data));
-    // let long: Subscription = coords$.pipe(pluck('longitude')).subscribe(data => (data));
     const cuisineURL: string = this.url + `cuisines?lat=${pluckedCoords[0].toString()}&lon=${pluckedCoords[1].toString()}`;
     return this.http.get<any>(cuisineURL, { headers: { 'user-key': this.key }}).pipe(
       map(res => (res.cuisines))
@@ -28,18 +27,16 @@ export class ZomatoService {
   }
 
   search(q: string, r: number, coords$: Observable<Coordinates>) {
-    // let lat: Subscription = coords$.pipe(pluck('latitude')).subscribe(data => (data));
-    // let long: Subscription = coords$.pipe(pluck('longitude')).subscribe(data => (data));
     const pluckedCoords = this.pluckCoordinates(coords$); 
     const searchURL: string = this.url + `search?lat=${pluckedCoords[0].toString()}&lon=${pluckedCoords[1].toString()}&radius=${r}&count=20`;
     const restaurants$ = this.http.get<any>(searchURL, { headers: { 'user-key': this.key } }).pipe(
       map(data => (data.restaurants))
     );
     restaurants$.subscribe(data => {
-      console.log(data, 'from zomato service');
+      // console.log(data, 'from zomato service');
       this.store.dispatch({ type:'[Zomato Service] Restaurants Received', restaurants: data})
     });
-
+    return restaurants$;
   }
 
   pluckCoordinates(coords$: Observable<Coordinates>): Subscription[] {

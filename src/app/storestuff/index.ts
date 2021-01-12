@@ -25,7 +25,7 @@ export const iniitialState: State = {
     latitude: undefined,
     longitude: undefined
   },
-  restaurants: undefined
+  restaurants: []
 };
 
 const locationReducer = createReducer(
