@@ -28,20 +28,21 @@ export class ZomatoService {
 
   search(q: string, r: number, coords$: Observable<Coordinates>) {
     const pluckedCoords = this.pluckCoordinates(coords$); 
-    const searchURL: string = this.url + `search?lat=${pluckedCoords[0].toString()}&lon=${pluckedCoords[1].toString()}&radius=${r}&count=20`;
+    const searchURL: string = this.url + `search?lat=${pluckedCoords[0].toString()}
+                              &lon=${pluckedCoords[1].toString()}&radius=${r}&count=20`;
     const restaurants$ = this.http.get<any>(searchURL, { headers: { 'user-key': this.key } }).pipe(
       map(data => (data.restaurants))
     );
     restaurants$.subscribe(data => {
       // console.log(data, 'from zomato service');
-      this.store.dispatch({ type:'[Zomato Service] Restaurants Received', restaurants: data})
+      this.store.dispatch({ type: '[Zomato Service] Restaurants Received', restaurants: data});
     });
     return restaurants$;
   }
 
   pluckCoordinates(coords$: Observable<Coordinates>): Subscription[] {
-    let lat: Subscription = coords$.pipe(pluck('latitude')).subscribe(data => (data));
-    let long: Subscription = coords$.pipe(pluck('longitude')).subscribe(data => (data));
+    const lat: Subscription = coords$.pipe(pluck('latitude')).subscribe(data => (data));
+    const long: Subscription = coords$.pipe(pluck('longitude')).subscribe(data => (data));
     return [lat, long];
   }
 }

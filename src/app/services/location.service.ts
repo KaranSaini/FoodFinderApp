@@ -42,7 +42,7 @@ export class LocationService {
       map(([latitude, longitude]) => ({ latitude, longitude }))
     ).subscribe((data) => {
       console.log(data);
-      this.store.dispatch({type: '[Location Service] Load Location', coordinate: data} )
+      this.store.dispatch({type: '[Location Service] Load Location', coordinate: data});
     });
   }
 }

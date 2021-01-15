@@ -16,7 +16,6 @@
 
             <button 
                 type="button"
-                formControlName="location"
                 class="locationButton"
                 (click)="locate($event)"
                 >Get Location</button>
@@ -24,3 +23,4 @@
         {{searchForm.value | json}}
     </section>
 </article>
+<app-restaurant-view></app-restaurant-view>
