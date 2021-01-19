@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Restaurant } from 'src/app/models/Restaurant';
 import { Coordinates } from 'src/app/models/Coordinates';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-restaurant-view',
@@ -12,15 +12,19 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./restaurant-view.component.scss']
 })
 export class RestaurantViewComponent implements OnInit {
-  restaurants$: Observable<any> = this.store.select('restaurants');
+  restaurants$: Observable<Restaurant[]> = this.store.select('restaurants').pipe(
+    map(data => {
+      if (data !== []) {
+        return data;
+      }
+      return [];
+    })
+  );
+  restaurants: Restaurant[] = [];
   constructor(private store: Store<{ location: Coordinates, restaurants: Restaurant[] }>) { }
 
-
-  // SOMETHING WEIRD IS GOING ON WITH STRUCTURE OF DATA COMING IN .... WORK ON THIS
   ngOnInit() {
-    this.restaurants$.pipe(
-      map(data => (data.restaurants))
-    ).subscribe(d => console.log(d));
+    this.restaurants$.subscribe(d => console.log(d));
   }
 
 }

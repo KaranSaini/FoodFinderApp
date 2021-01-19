@@ -25,21 +25,7 @@ export const iniitialState: State = {
     latitude: undefined,
     longitude: undefined
   },
-  restaurants: [{
-    R: undefined,
-    average_cost_for_two: undefined,
-    cuisines: undefined,
-    establishment: undefined,
-    establishment_types: undefined,
-    highlights: undefined,
-    location: undefined,
-    menu_url: undefined,
-    name: undefined,
-    offers: undefined,
-    phone_numbers: undefined,
-    photos_url: undefined,
-    user_rating: undefined
-  }]
+  restaurants: []
 };
 
 const locationReducer = createReducer(
@@ -47,8 +33,8 @@ const locationReducer = createReducer(
   on(LocationActions.locationAvailable, (state: State, { coordinate }) => {
     return { ...state, location: { latitude: coordinate.latitude, longitude: coordinate.longitude }};
   }),
-  on(LocationActions.restaurantsAvailable, (state: State, incomingRestaurants) =>  {
-    return { ...state,  restaurants: [...state.restaurants, incomingRestaurants]};
+  on(LocationActions.restaurantsAvailable, (state: State, { restaurants }) => {
+    return { ...state, restaurants: [...state.restaurants, restaurants]};
   })
 );
 

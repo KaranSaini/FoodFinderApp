@@ -34,7 +34,7 @@ export class ZomatoService {
       map(data => (data.restaurants))
     );
     restaurants$.subscribe(data => {
-      // console.log(data, 'from zomato service');
+      console.log(data, 'from zomato service');
       this.store.dispatch({ type: '[Zomato Service] Restaurants Received', restaurants: data});
     });
     return restaurants$;
