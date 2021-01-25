@@ -34,7 +34,7 @@ const locationReducer = createReducer(
     return { ...state, location: { latitude: coordinate.latitude, longitude: coordinate.longitude }};
   }),
   on(LocationActions.restaurantsAvailable, (state: State, { restaurants }) => {
-    return { ...state, restaurants: [...state.restaurants, restaurants]};
+    return { ...state, restaurants: [...restaurants]};
   })
 );
 

@@ -9,5 +9,5 @@ export const locationAvailable = createAction(
 
 export const restaurantsAvailable = createAction(
     '[Zomato Service] Restaurants Received',
-    props<{ restaurants: Restaurant[] }>()
+    props<{ restaurants: [] }>()
 );

@@ -1,16 +1,19 @@
 <article>
     <section class="header">
-        <h1>Food App</h1>
-        <p>Find good food around you!</p>
+        <h1>FOOOOOOD!</h1>
+        <p>Make it easy to find food</p>
     </section>
-    <section>
+    <section class="form-container">
         <form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm)">
-            <input type="search" formControlName="query" placeholder="Search...">
-            <mat-slider 
-            formControlName="radius"
-            thumbLabel
-            min="0" max="100" 
-            step="1" value="15"></mat-slider>
+            <input class="searchbox" type="search" formControlName="query" placeholder="Search...">
+
+            <input 
+                class="distanceSlider"
+                type="range" 
+                formControlName="radius" 
+                value="10"
+                step="1"
+                min="0" max="25">
             
             <button type="submit">Submit</button>
 
@@ -23,4 +26,7 @@
         {{searchForm.value | json}}
     </section>
 </article>
-<app-restaurant-view></app-restaurant-view>
+
+<app-restaurant-view 
+    *ngIf="loadRestaurants"
+    [restaurants]="restaurants$"></app-restaurant-view>

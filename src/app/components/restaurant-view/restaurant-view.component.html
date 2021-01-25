@@ -1,9 +1,18 @@
 <article>
     <h1>Restaurants: </h1>
-    <section *ngIf="restaurants$ == [] | async">
-        restaurants will go here
-        <ul *ngFor="let restaurant of restaurants$ | async">
-            <li>{{restaurant?.cuisines}}</li>
+    <section>
+        <ul class="container loaded">
+            <li class="card"  *ngFor="let restaurant of restaurants | async">
+                <header>
+                    <h4>{{restaurant.restaurant.name}}</h4>
+                </header>
+                <footer>
+                    <p>Cuisines: {{restaurant.restaurant.cuisines}}</p>
+                    Highlights: <p *ngFor="let highlight of restaurant.restaurant.highlights">
+                        {{highlight}}</p>
+                    <p>Contact: {{restaurant.restaurant.phone_numbers}}</p>
+                </footer>
+            </li>
         </ul>
     </section>
 </article>

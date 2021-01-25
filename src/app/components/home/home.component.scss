@@ -1,0 +1,46 @@
+@import '../../../colors.scss';
+
+article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 50%;
+    align-items: center;
+
+    .header {
+        h1 {
+            font-size: 5rem;
+        }
+        p {
+            font-size: 3rem;
+        }
+    }
+
+    .form-container {
+        form {
+            .searchbox {
+                border-radius: 10px;
+                border: thin solid $whiteShade; 
+                font-size: 1.5rem;
+                background-color: $whiteShade;
+                color: black;
+                padding: 1.5rem;
+                margin: 1.5rem;
+                height: 2rem;
+                width: 50vw;
+                transition: all 1s ease-in-out;
+            }
+            .searchbox:focus {
+                outline: none;
+                border: thin solid invert($whiteShade);
+                background-color: invert($whiteShade);
+                color: $whiteShade;
+                transition: all 1s ease-in-out;
+            }
+            
+            .distanceSlider {
+                // -webkit-appearance: none;
+            }
+        }
+    }
+}

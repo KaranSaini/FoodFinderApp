@@ -28,10 +28,22 @@ $FoodApp-theme: mat-light-theme($FoodApp-primary, $FoodApp-accent, $FoodApp-warn
 
 /* You can add global styles to this file, and also import other style files */
 
+@import './colors.scss';
+
 * {
     box-sizing: border-box;
     margin:0;
     padding:0;
 }
-html, body { height: 100%; }
+html, body { 
+    height: 100%; 
+    background-color: $light-pinkish;
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+//media query for small iphones (5, se)
+@media only screen and (max-width: 320px) {
+
+}
+
+// Color Pallette 

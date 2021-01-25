@@ -1,0 +1,21 @@
+@import '../../../colors.scss';
+
+.container {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+    li {
+        min-width: 3rem;
+        min-height: 5rem;
+        padding: 1rem;
+        margin: 1.5rem;
+
+        border-radius: 4px;
+        background-color: $whiteShade;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}

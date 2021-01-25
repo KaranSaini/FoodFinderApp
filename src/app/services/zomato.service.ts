@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { pluck, map } from 'rxjs/operators';
 import { Coordinates } from '../models/Coordinates';
 import { Restaurant } from '../models/Restaurant';
+import { GcImagesearchService } from './gc-imagesearch.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ import { Restaurant } from '../models/Restaurant';
 export class ZomatoService {
   constructor(
     private store: Store<{ coords: Coordinates }>,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private imageSearch: GcImagesearchService) { }
   url = 'https://developers.zomato.com/api/v2.1/';
   key = '3cfe188e3ef039a3cc20dad9038a2e7a';
   // coords$: Observable<Coordinates> = this.store.select(state => state.coords);
@@ -27,14 +29,26 @@ export class ZomatoService {
   }
 
   search(q: string, r: number, coords$: Observable<Coordinates>) {
-    const pluckedCoords = this.pluckCoordinates(coords$); 
+    const pluckedCoords = this.pluckCoordinates(coords$);
     const searchURL: string = this.url + `search?lat=${pluckedCoords[0].toString()}
-                              &lon=${pluckedCoords[1].toString()}&radius=${r}&count=20`;
+                              &lon=${pluckedCoords[1].toString()}&radius=${r}&q=${q}&count=20`;
     const restaurants$ = this.http.get<any>(searchURL, { headers: { 'user-key': this.key } }).pipe(
-      map(data => (data.restaurants))
+      map(data => (data.restaurants)),
+      map(restaurants => {
+        console.log(restaurants);
+        for(let i = 0; i < restaurants.length; i++) {
+          const name = restaurants[i].restaurant.name;
+          setTimeout(() => {
+            this.imageSearch.search(name).subscribe(img => {
+              restaurants[i].restaurant.imageLink = img;
+            });
+          }, 50);
+          // restaurants[i].restaurant.imageLink
+        }
+        return restaurants;
+      })
     );
     restaurants$.subscribe(data => {
-      console.log(data, 'from zomato service');
       this.store.dispatch({ type: '[Zomato Service] Restaurants Received', restaurants: data});
     });
     return restaurants$;
