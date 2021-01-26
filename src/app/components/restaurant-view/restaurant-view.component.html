@@ -4,13 +4,22 @@
         <ul class="container loaded">
             <li class="card"  *ngFor="let restaurant of restaurants | async">
                 <header>
-                    <h4>{{restaurant.restaurant.name}}</h4>
+                    <h2>{{restaurant.restaurant.name}}</h2>
                 </header>
                 <footer>
-                    <p>Cuisines: {{restaurant.restaurant.cuisines}}</p>
-                    Highlights: <p *ngFor="let highlight of restaurant.restaurant.highlights">
-                        {{highlight}}</p>
-                    <p>Contact: {{restaurant.restaurant.phone_numbers}}</p>
+                    <div class="cuisines">
+                        <p><strong>Cuisines:</strong> {{restaurant.restaurant.cuisines}}</p>
+                    </div>
+                    <p class="contact"><strong>Contact:</strong> {{restaurant.restaurant.phone_numbers}}</p>
+                    <div *ngIf="restaurant.restaurant.menu_url" class="menu">
+                        <a [href]="restaurant.restaurant.menu_url">Menu</a>
+                    </div>
+
+                    <ul class="highlights">
+                        <li *ngFor="let highlight of restaurant.restaurant.highlights; let l = count; let i = index">
+                            <div>{{highlight |titlecase}}</div>
+                        </li>
+                    </ul>
                 </footer>
             </li>
         </ul>

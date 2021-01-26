@@ -5,7 +5,6 @@ import { Restaurant } from 'src/app/models/Restaurant';
 import { Coordinates } from 'src/app/models/Coordinates';
 import { Observable, Subject, AsyncSubject } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
-import { GcImagesearchService } from 'src/app/services/gc-imagesearch.service';
 
 @Component({
   selector: 'app-restaurant-view',
@@ -14,10 +13,9 @@ import { GcImagesearchService } from 'src/app/services/gc-imagesearch.service';
 })
 export class RestaurantViewComponent implements OnInit, OnChanges {
   @Input() restaurants: Observable<any>;
-  constructor(private image: GcImagesearchService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.image.search('pizza');
   }
 
   ngOnChanges() {
