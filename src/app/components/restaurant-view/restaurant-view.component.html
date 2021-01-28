@@ -4,8 +4,9 @@
         <ul class="container loaded">
             <li class="card"  *ngFor="let restaurant of restaurants | async">
                 <header>
-                    <h2>{{restaurant.restaurant.name}}</h2>
+                    <h2 class="name">{{restaurant.restaurant.name}}</h2>
                 </header>
+                <hr>
                 <footer>
                     <div class="cuisines">
                         <p><strong>Cuisines:</strong> {{restaurant.restaurant.cuisines}}</p>
@@ -16,6 +17,8 @@
                     </div>
 
                     <ul class="highlights">
+                        <h4>Highlights: </h4>
+                        <br>
                         <li *ngFor="let highlight of restaurant.restaurant.highlights; let l = count; let i = index">
                             <div>{{highlight |titlecase}}</div>
                         </li>
