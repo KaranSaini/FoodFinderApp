@@ -5,23 +5,26 @@ import { Restaurant } from 'src/app/models/Restaurant';
 import { Coordinates } from 'src/app/models/Coordinates';
 import { Observable, Subject, AsyncSubject } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
+import { ZomatoService } from 'src/app/services/zomato.service';
 
 @Component({
   selector: 'app-restaurant-view',
   templateUrl: './restaurant-view.component.html',
   styleUrls: ['./restaurant-view.component.scss']
 })
-export class RestaurantViewComponent implements OnInit, OnChanges {
+export class RestaurantViewComponent implements OnInit {
   @Input() restaurants: Observable<any>;
-  constructor() { }
+  i = 1;
+  constructor(
+    public api: ZomatoService) { }
 
   ngOnInit() {
   }
 
-  ngOnChanges() {
-    this.restaurants.subscribe((data) => {
-      console.log('this is the information coming from parent', data);
-    });
+  getMore() {
+    if (this.i < 4) {
+      this.api.searchWithOffset(this.i++);
+    }
   }
 }
 

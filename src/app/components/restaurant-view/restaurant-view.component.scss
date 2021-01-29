@@ -22,9 +22,6 @@
         
         border-radius: 4px;
         background-color: $whiteShade;
-        // display: flex;
-        // flex-direction: column;
-        // justify-content: start;
 
         header {
             height: 25%;
@@ -70,14 +67,15 @@
                     margin-bottom: .5rem;
                 }
                 li {
-                    margin: 0;
+                    margin: 1px;
                     background-color: $light-pinkish;
                     color: white;
                     text-align: center;
-                    padding: .5rem;
+                    padding: .6rem;
                     width: auto;
-                    max-height: 2rem;
-                    border-radius: 25px;
+                    max-height: 2.5rem;
+                    border-radius: 500px;
+                    overflow: scroll;
                 }
             }
         }

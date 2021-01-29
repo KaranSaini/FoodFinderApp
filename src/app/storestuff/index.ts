@@ -9,7 +9,7 @@ import {
   on
 } from '@ngrx/store';
 
-import * as LocationActions from './location.actions';
+import * as LocationActions from './actions';
 import { Coordinates } from '../models/Coordinates';
 import { Restaurant } from '../models/Restaurant';
 

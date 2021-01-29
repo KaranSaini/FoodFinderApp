@@ -6,4 +6,6 @@ Built with app state in mind (using @ngrx/store, effects, etc)
 
 # Work on
 
-multiple calls means a new 20 length array is added to the state everytime ... not good
+multiple calls means a new 20 length array is added to the state everytime ... not good -- FIXED
+
+want to be able to do another call for more items with an offset using same query parameters

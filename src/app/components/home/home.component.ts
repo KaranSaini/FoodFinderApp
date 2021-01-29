@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private store: Store<{ location: Coordinates, restaurants: Restaurant[] }>,
               private location: LocationService,
-              private api: ZomatoService,
+              public api: ZomatoService,
               private actions$: Actions) {}
   ngOnInit() {
       // Looks for Location Success
@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
     // this.searchForm.patchValue({'location': true});
   }
   onSubmit(data) {
-    // checking if location is set beefore looking for restaurants
+    // checking if location is set before looking for restaurants
     if (this.locationCheck === false) {
       alert('LOCATION IS REQUIRED TO PROCEED');
       return;
