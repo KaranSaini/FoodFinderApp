@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
     radius: new FormControl(10, Validators.required),
   });
 
-  constructor(private store: Store<{ location: Coordinates, restaurants: Restaurant[] }>,
+  constructor(public store: Store<{ location: Coordinates, restaurants: Restaurant[] }>,
               private location: LocationService,
               public api: ZomatoService,
               private actions$: Actions) {}

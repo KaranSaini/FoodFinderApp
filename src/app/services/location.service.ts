@@ -18,7 +18,7 @@ export class LocationService {
   constructor(private store: Store<{ location: Coordinates }>) { }
 
   callGeoLocationAPI() {
-    if('geolocation' in navigator) {
+    if ('geolocation' in navigator) {
       const geo = navigator.geolocation;
       geo.getCurrentPosition((pos) => {
         this.getLocation(pos);

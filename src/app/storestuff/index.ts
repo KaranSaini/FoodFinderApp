@@ -16,7 +16,7 @@ import { Restaurant } from '../models/Restaurant';
 // Defining Shape of State for App
 export interface State {
   location: Coordinates;
-  restaurants: Restaurant[];
+  restaurants: [];
 }
 
 // Defining iniital values (there are none)
@@ -31,10 +31,13 @@ export const iniitialState: State = {
 const locationReducer = createReducer(
   iniitialState,
   on(LocationActions.locationAvailable, (state: State, { coordinate }) => {
-    return { ...state, location: { latitude: coordinate.latitude, longitude: coordinate.longitude }};
+    return { location: { latitude: coordinate.latitude, longitude: coordinate.longitude }, ...state};
   }),
-  on(LocationActions.restaurantsAvailable, (state: State, { restaurants }) => {
-    return { ...state, restaurants: [...restaurants]};
+  on(LocationActions.restaurantsAvailable, ( state: State, {initialRestaurants} ) => {
+    return { restaurants: initialRestaurants};
+  }),
+  on(LocationActions.moreRestaurants, (state: State, {newRestaurants}) => {
+    return {  restaurants: state.restaurants.concat(newRestaurants) };
   })
 );
 

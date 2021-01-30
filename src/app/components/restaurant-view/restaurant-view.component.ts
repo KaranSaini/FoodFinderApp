@@ -5,6 +5,7 @@ import { Restaurant } from 'src/app/models/Restaurant';
 import { Coordinates } from 'src/app/models/Coordinates';
 import { Observable, Subject, AsyncSubject } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { ZomatoService } from 'src/app/services/zomato.service';
 
 @Component({
@@ -14,17 +15,26 @@ import { ZomatoService } from 'src/app/services/zomato.service';
 })
 export class RestaurantViewComponent implements OnInit {
   @Input() restaurants: Observable<any>;
+  appState = this.store.select('restaurants');
   i = 1;
   constructor(
-    public api: ZomatoService) { }
+    public api: ZomatoService,
+    public store: Store<{restaurants: []}>) { }
 
   ngOnInit() {
   }
 
   getMore() {
-    if (this.i < 4) {
-      this.api.searchWithOffset(this.i++);
-    }
+    this.appState.subscribe(data => {
+      if (data.length < 100) {
+        // this.api.searchWithOffset(this.i++);
+      }
+      else {
+        // MAX RESULTS REACHED
+        console.log(data);
+        return;
+      }
+    });
   }
 }
 
