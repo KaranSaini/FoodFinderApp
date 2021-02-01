@@ -90,10 +90,10 @@
 @keyframes animateIn{
     from {
         opacity: 0;
-        transform: translateY(150px) rotateX(.1turn) rotateY(-.2turn);
+        transform:  rotateX(.1turn) rotateY(-.2turn);
     }
     to {
         opacity: 1;
-        transform: translateY(0) rotate(0, 0, 0);
+        transform:  rotate(0, 0, 0);
     }
 }

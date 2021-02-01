@@ -29,7 +29,7 @@ export class ZomatoService {
     );
   }
 
-  search(q: string, r: number, coords$: Observable<Coordinates>) {
+  async search(q: string, r: number, coords$: Observable<Coordinates>): Promise<boolean> {
     this.query = q;
     this.radius = r;
     const pluckedCoords = this.pluckCoordinates(coords$);
@@ -43,64 +43,38 @@ export class ZomatoService {
     });
 
     // go get the rest of the results ahead of time ...
-    this.getMoreResults(q, r, coords$, searchURL);
-
-    return restaurants$;
+    const searchCheck = await this.getMoreResults(q, r);
+    return searchCheck;
   }
 
-  private getMoreResults(q, r, coords$, url) {
+  private async getMoreResults(q: string, r: number): Promise<boolean> {
     let i = 1;
+    const pluckedCoords = this.pluckCoordinates(this.coords$);
+    const searchURL: string = this.url + `search?lat=${pluckedCoords[0].toString()}
+                              &lon=${pluckedCoords[1].toString()}&radius=${r}&q=${q}&count=20&sort=rating`;
     // is there some sort of series here? --- look into a better way to do this
-    let valMap = {
+    const valMap = {
       1 : '20',
       2 : '40',
       3 : '60',
       4 : '80'
     };
-    while (i < 4) {
-      let offset = valMap[i++];
-      const newURL = this.url + offset;
+    while (i <= 4) {
+      const offset = valMap[i++];
+      const newURL = searchURL + `&start=${offset}`;
+      console.log(newURL);
       const restaurants$ = this.http.get<any>(newURL, { headers: { 'user-key': this.key } }).pipe(
         map(data => (data.restaurants))
       );
       restaurants$.subscribe(data => {
         this.store.dispatch({ type: '[Zomato Service] More Restaurants Received', newRestaurants: data});
+      }, (error) => {
+        console.log(error);
+        return false;
       });
     }
+    return true;
   }
-
-  // searchWithOffset(iteration: number) {
-  //   const pluckedCoords = this.pluckCoordinates(this.coords$);
-  //   console.log(`the iteration is ${iteration}`);
-  //   const searchURL: string = this.url + `search?lat=${pluckedCoords[0].toString()}
-  //   &lon=${pluckedCoords[1].toString()}&radius=${this.radius}&q=${this.query}&count=20&sort=rating`;
-  //   // 1 : (20 - 40) 2 : (40 - 60) 3: (60-80) 4 : (80 - 100)
-  //   switch (iteration) {
-  //     case 1 :
-  //       // 20
-  //       let firstURL = searchURL + '&start=20';
-  //       const restaurants$ = this.http.get<any>(firstURL, { headers: { 'user-key': this.key } }).pipe(
-  //         map(data => {
-  //           return data.restaurants;
-  //         })
-  //       );
-  //       restaurants$.subscribe(data => {
-  //         console.log(data);
-  //         this.store.dispatch({ type: '[Zomato Service] More Restaurants Received', newRestaurants: data});
-  //       });
-  //       return;
-  //     case 2 :
-  //       // 40
-  //       let secondURL = searchURL + '&start=60';
-  //       return;
-  //     case 3 :
-  //       // 80
-  //       let thirdURL = searchURL + '&start=80';
-  //       return;
-  //     default:
-  //       console.log('offset cant go higher');
-  //   }
-  // }
 
   pluckCoordinates(coords$: Observable<Coordinates>): Subscription[] {
     const lat: Subscription = coords$.pipe(pluck('latitude')).subscribe(data => (data));

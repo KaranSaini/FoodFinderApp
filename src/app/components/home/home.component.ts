@@ -18,7 +18,7 @@ import { Restaurant } from 'src/app/models/Restaurant';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  loadRestaurants = false;
+  loadingDone = false;
   location$: Observable<Coordinates> = this.store.select('location');
   restaurants$: Observable<any> = this.store.select('restaurants').pipe(pluck('restaurants'));
   locationCheck = false;
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
     });
     // this.searchForm.patchValue({'location': true});
   }
-  onSubmit(data) {
+  async onSubmit(data) {
     // checking if location is set before looking for restaurants
     if (this.locationCheck === false) {
       alert('LOCATION IS REQUIRED TO PROCEED');
@@ -67,11 +67,8 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    this.api.search(query, radius, this.location$);
-    this.location$.subscribe( loc => {
-      if (loc && this.locationCheck === true) {
-        this.loadRestaurants = true;
-      }
-    });
+    const searchCheck = await this.api.search(query, radius, this.location$);
+    console.log(searchCheck);
+    this.loadingDone = true;
   }
 }

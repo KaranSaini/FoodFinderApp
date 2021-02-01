@@ -27,6 +27,8 @@
     </section>
 </article>
 
-<app-restaurant-view 
-    *ngIf="loadRestaurants"
+<app-loading *ngIf="loadingDone==false"></app-loading>
+
+<app-restaurant-view
+    *ngIf="loadingDone"
     [restaurants]="restaurants$"></app-restaurant-view>

@@ -15,28 +15,10 @@ import { ZomatoService } from 'src/app/services/zomato.service';
 })
 export class RestaurantViewComponent implements OnInit {
   @Input() restaurants: Observable<any>;
-  appState = this.store.select('restaurants');
-  i = 1;
-  constructor(
-    public api: ZomatoService,
-    public store: Store<{restaurants: []}>) { }
+  @Input() loading: boolean;
+
+  constructor() { }
 
   ngOnInit() {
   }
-
-  getMore() {
-    this.appState.subscribe(data => {
-      if (data.length < 100) {
-        // this.api.searchWithOffset(this.i++);
-      }
-      else {
-        // MAX RESULTS REACHED
-        console.log(data);
-        return;
-      }
-    });
-  }
 }
-
-
-// CAN IMPLEMENT A SHOW MORE BUTTON THAT RESULTS IN ANOTHER REQUEST WITH AN OFFSET

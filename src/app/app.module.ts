@@ -13,12 +13,14 @@ import * as fromLocation from './storestuff/index';
 import { EffectsModule } from '@ngrx/effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RestaurantViewComponent } from './components/restaurant-view/restaurant-view.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    RestaurantViewComponent
+    RestaurantViewComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
