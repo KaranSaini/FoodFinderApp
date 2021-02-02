@@ -62,7 +62,6 @@ export class ZomatoService {
     while (i <= 4) {
       const offset = valMap[i++];
       const newURL = searchURL + `&start=${offset}`;
-      console.log(newURL);
       const restaurants$ = this.http.get<any>(newURL, { headers: { 'user-key': this.key } }).pipe(
         map(data => (data.restaurants))
       );

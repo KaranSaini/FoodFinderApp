@@ -7,6 +7,7 @@ import { Observable, Subject, AsyncSubject } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ZomatoService } from 'src/app/services/zomato.service';
+import { LoadingService } from '../loading/loading.service';
 
 @Component({
   selector: 'app-restaurant-view',
@@ -15,10 +16,15 @@ import { ZomatoService } from 'src/app/services/zomato.service';
 })
 export class RestaurantViewComponent implements OnInit {
   @Input() restaurants: Observable<any>;
-  @Input() loading: boolean;
+  // @Input() loading: boolean;
 
-  constructor() { }
+  constructor(public loading: LoadingService) { }
 
   ngOnInit() {
+    this.restaurants.subscribe((info) => {
+      if (info.length >= 20) {
+        this.loading.requestEnded();
+      }
+    });
   }
 }
