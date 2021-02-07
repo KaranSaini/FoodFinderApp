@@ -14,13 +14,15 @@ import { EffectsModule } from '@ngrx/effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RestaurantViewComponent } from './components/restaurant-view/restaurant-view.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { DoneIndicatorComponent } from './components/done-indicator/done-indicator.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     RestaurantViewComponent,
-    LoadingComponent
+    LoadingComponent,
+    DoneIndicatorComponent
   ],
   imports: [
     BrowserModule,

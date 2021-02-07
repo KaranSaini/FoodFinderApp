@@ -38,12 +38,6 @@ export class HomeComponent implements OnInit {
               public loading: LoadingService
               ) {}
   ngOnInit() {
-      // Looks for Location Success
-    this.actions$.pipe(
-      ofType('[Location Service] Load Location')
-    ).subscribe(() => {
-      console.log('the location was successfully set');
-    });
   }
 
   locate(e) {
@@ -54,7 +48,6 @@ export class HomeComponent implements OnInit {
         this.locationCheck = true;
       }
     });
-    // this.searchForm.patchValue({'location': true});
   }
   onSubmit(data) {
     // checking if location is set before looking for restaurants

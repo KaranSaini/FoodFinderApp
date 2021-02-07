@@ -8,7 +8,8 @@ import { LoadingService } from './loading.service';
 })
 export class LoadingComponent implements OnInit {
   showLoading = false;
-  constructor(private loading: LoadingService, private cdRef: ChangeDetectorRef) { 
+  showDone = false;
+  constructor(private loading: LoadingService, private cdRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -18,6 +19,7 @@ export class LoadingComponent implements OnInit {
   init() {
     this.loading.getSpinnerObserver().subscribe((status) => {
       this.showLoading = status === 'start';
+      this.showDone = status === 'end';
       this.cdRef.detectChanges();
     });
   }

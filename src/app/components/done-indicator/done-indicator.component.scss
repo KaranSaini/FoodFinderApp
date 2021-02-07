@@ -1,0 +1,38 @@
+
+  svg {
+    width: 25vh;
+    height: 25vh;
+
+    #first-circle {
+      animation: lds-grid 1s ease-in-out infinite;
+      animation-delay: 0s;
+    }
+    #middle-circle {
+      animation: lds-grid 1s ease-in-out infinite;
+      animation-delay: -0.4s;
+    }
+    #smallest-circle {
+      animation: lds-grid 1s ease-in-out infinite;
+      animation-delay: -0.8s; 
+    }
+    #circle-around-arrow {
+      // animation: lds-grid 1s ease-in-out infinite;
+      // animation-delay: -1.2s;
+    }
+    #arrow {
+      animation: bobAndSpin 4s ease infinite;
+      // animation-delay: -1.6s;
+      transform-origin: 50%;
+    }
+  }
+
+  @keyframes bobAndSpin {
+    0% {
+    }
+    50% {
+      transform: rotateY(180deg);
+    }
+    100% {
+      transform: rotateY(0deg);
+    }
+  }
