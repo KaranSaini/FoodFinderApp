@@ -16,3 +16,7 @@ export const moreRestaurants = createAction(
     '[Zomato Service] More Restaurants Received',
     props<{ newRestaurants: [] }>()
 );
+
+export const requestsCompleted = createAction(
+    '[Home Component] Requests Completed'
+);
