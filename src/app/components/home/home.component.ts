@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
 
   // ALERT --- CHANGE DEFAULT VAL LATER THIS IS JUST TO SAVE TIME...
   searchForm: FormGroup = new FormGroup({
-    query: new FormControl('burgers', Validators.required),
+    query: new FormControl('', Validators.required),
     radius: new FormControl(10, Validators.required),
   });
 
@@ -59,22 +59,8 @@ export class HomeComponent implements OnInit {
       if (data) {
         console.log(data);
         this.loadRestaurants = true;
-        this.transformUI('done');
-      }
-      else {
-        this.transformUI('notDone');
       }
     });
-  }
-
-  transformUI(status: string) {
-    const searchArticle: HTMLElement = document.querySelector('article');
-    if (status === 'done') {
-      // searchArticle.classList.add('transformUP');
-    }
-    else if (status === 'notDone') {
-      // searchArticle.classList.remove('transformUP');
-    }
   }
 
   locate(e) {
@@ -88,7 +74,6 @@ export class HomeComponent implements OnInit {
   }
   onSubmit(data) {
     // checking if location is set before looking for restaurants
-    this.loading.requestStarted();
     if (this.locationCheck === false) {
       alert('LOCATION IS REQUIRED TO PROCEED');
       return;
@@ -99,6 +84,7 @@ export class HomeComponent implements OnInit {
       alert('QUERY AND RADIUS ARE REQUIRED');
       return;
     }
+    this.loading.requestStarted();
 
     this.api.search(query, radius, this.location$).then(() => {
       this.loadingDone = true;

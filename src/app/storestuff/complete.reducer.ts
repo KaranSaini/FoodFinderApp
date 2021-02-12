@@ -4,7 +4,11 @@ import { requestsCompleted } from './actions';
 
 const initialState = false;
 
-export const requestsCompletedReducer = createReducer(
+const reducer = createReducer(
     initialState,
     on(requestsCompleted, (state) => (true)),
 );
+
+export function requestsCompletedReducer(state, action) {
+    return reducer(state, action);
+}
