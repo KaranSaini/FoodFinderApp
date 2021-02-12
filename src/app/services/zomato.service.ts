@@ -7,6 +7,7 @@ import { pluck, map } from 'rxjs/operators';
 import { Coordinates } from '../models/Coordinates';
 import { Restaurant } from '../models/Restaurant';
 import { createSelector } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class ZomatoService {
   private radius: number;
   constructor(
     public store: Store<{ location: Coordinates }>,
-    private http: HttpClient) { }
+    private http: HttpClient, 
+    private actions$: Actions) { }
   url = 'https://developers.zomato.com/api/v2.1/';
   key = '3cfe188e3ef039a3cc20dad9038a2e7a';
   coords$: Observable<Coordinates> = this.store.select('location');
@@ -43,8 +45,12 @@ export class ZomatoService {
     });
 
     // go get the rest of the results ahead of time ...
-    const searchCheck = await this.getMoreResults(q, r);
-    return searchCheck;
+    this.actions$.pipe(
+      ofType('[Zomato Service] Restaurants Received')
+    ).subscribe(() => this.getMoreResults(q, r));
+    // const searchCheck = await this.getMoreResults(q, r);
+    // return searchCheck;
+    return true;
   }
 
   private async getMoreResults(q: string, r: number): Promise<boolean> {

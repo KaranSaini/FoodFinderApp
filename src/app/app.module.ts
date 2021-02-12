@@ -9,12 +9,18 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 
 import { StoreModule } from '@ngrx/store';
-import * as fromLocation from './storestuff/index';
+// import * as fromLocation from './storestuff/index';
 import { EffectsModule } from '@ngrx/effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RestaurantViewComponent } from './components/restaurant-view/restaurant-view.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { DoneIndicatorComponent } from './components/done-indicator/done-indicator.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+
+import { restaurantReducer } from './storestuff/restaurants.reducer';
+import { locationReducer } from './storestuff/location.reducer';
+import { requestsCompletedReducer } from './storestuff/complete.reducer';
 
 @NgModule({
   declarations: [
@@ -29,10 +35,15 @@ import { DoneIndicatorComponent } from './components/done-indicator/done-indicat
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ location: fromLocation.reducer, restaurants: fromLocation.reducer }),
+    StoreModule.forRoot({
+      location: locationReducer,
+      restaurants: restaurantReducer,
+      complete: requestsCompletedReducer
+    }),
     EffectsModule.forRoot([]),
     BrowserAnimationsModule,
-    MatSliderModule
+    MatSliderModule,
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

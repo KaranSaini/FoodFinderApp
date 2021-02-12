@@ -1,4 +1,4 @@
-<article>
+<article class="master-container">
     <section class="header">
         <div class="heading">
             <h1>FOOOOOOD!</h1>
@@ -8,44 +8,43 @@
     </section>
     <section class="form-container">
         <form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm)">
-            <button 
-                type="button"
-                class="locationButton"
-                (click)="locate($event)"
-                >
-                <svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Locate</title><path fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M256 96V56M256 456v-40'/><path d='M256 112a144 144 0 10144 144 144 144 0 00-144-144z' fill='none' stroke='currentColor' stroke-miterlimit='10' stroke-width='32'/><path fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M416 256h40M56 256h40'/></svg>
-                <span class="forScreenReaders">Click for Location</span>
-            </button>
-            <input class="searchbox" type="search" formControlName="query" placeholder="Search...">
-            
-            <label for="radius">Radius</label>
-            <input
-                #radius 
-                name="radius"
-                class="distanceSlider"
-                type="range" 
-                formControlName="radius" 
-                value="10"
-                step="1"
-                min="0" max="25">
-            <output id="rangeValue">{{radius.value }}</output>
+            <div class="location-and-search-container">
+                <button 
+                    type="button"
+                    class="locationButton"
+                    (click)="locate($event)"
+                    >
+                    <svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Locate</title><path fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M256 96V56M256 456v-40'/><path d='M256 112a144 144 0 10144 144 144 144 0 00-144-144z' fill='none' stroke='currentColor' stroke-miterlimit='10' stroke-width='32'/><path fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M416 256h40M56 256h40'/></svg>
+                    <span class="forScreenReaders">Click for Location</span>
+                </button>
+                <input class="searchbox" type="search" formControlName="query" placeholder="Search...">
+            </div>
 
-            <!-- <mat-slider
-                class="distanceSlider"
-                formControlName="radius"
-                thumbLabel
-                min="1" max="30"
-                value="5" step="1"
-                color="primary"></mat-slider> -->
+            <div class="radius-container">
+                <label for="radius">Radius</label>
+                <input
+                    #radius 
+                    name="radius"
+                    class="distanceSlider"
+                    type="range" 
+                    formControlName="radius" 
+                    value="10"
+                    step="1"
+                    min="0" max="25">
+                <output id="rangeValue">{{radius.value }}</output>
+            </div>
             
-            <button [disabled]="!locationCheck" class="submit" type="submit">Find Food!</button>
+            <button [disabled]="!locationCheck" class="submit" type="submit">
+                Find Food!
+            </button>
             <section class="loadingContainer">
                 <app-loading></app-loading>
             </section>
         </form>
     </section>
-    <app-done-indicator></app-done-indicator>
 </article>
+<app-done-indicator></app-done-indicator>
 
 <app-restaurant-view
+    *ngIf="loadRestaurants"
     [restaurants]="restaurants$"></app-restaurant-view>

@@ -28,7 +28,7 @@ $FoodApp-theme: mat-light-theme($FoodApp-primary, $FoodApp-accent, $FoodApp-warn
 
 /* You can add global styles to this file, and also import other style files */
 
-@import './colors.scss';
+@import './style-variables.scss';
 
 * {
     box-sizing: border-box;

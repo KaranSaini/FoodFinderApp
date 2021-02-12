@@ -1,3 +1,10 @@
+.svg-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 
   svg {
     width: 25vh;
@@ -34,5 +41,20 @@
     }
     100% {
       transform: rotateY(0deg);
+    }
+  }
+
+  @media screen and (max-width: 320px) {
+    .svg-container {
+      width: 100vw;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top: -20vh;
+      margin-bottom: 3rem;
+    }
+    svg {
+      width: 30vh;
+      height: 30vh;
     }
   }
