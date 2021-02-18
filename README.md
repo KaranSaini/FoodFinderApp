@@ -11,5 +11,5 @@ Important: (you will need to get an api key from Zomato to run this locally...)
 
 1. Clone this repo
 2. run `npm install --save` in root directory
-3. Create an environements folder in the src directory and add your api key to the environments
+3. Go to environements folder in the src directory and add your api key to the environment.prod.ts
 4. `ng serve`
