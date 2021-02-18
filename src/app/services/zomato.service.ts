@@ -8,6 +8,7 @@ import { Coordinates } from '../models/Coordinates';
 import { Restaurant } from '../models/Restaurant';
 import { createSelector } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +18,10 @@ export class ZomatoService {
   private radius: number;
   constructor(
     public store: Store<{ location: Coordinates }>,
-    private http: HttpClient, 
+    private http: HttpClient,
     private actions$: Actions) { }
   url = 'https://developers.zomato.com/api/v2.1/';
-  key = '3cfe188e3ef039a3cc20dad9038a2e7a';
+  key = environment.KEY;
   coords$: Observable<Coordinates> = this.store.select('location');
 
   getCuisines(coords$: Observable<Coordinates>) {
@@ -32,6 +33,7 @@ export class ZomatoService {
   }
 
   async search(q: string, r: number, coords$: Observable<Coordinates>): Promise<boolean> {
+    console.log(this.key);
     this.query = q;
     this.radius = r;
     const pluckedCoords = this.pluckCoordinates(coords$);
